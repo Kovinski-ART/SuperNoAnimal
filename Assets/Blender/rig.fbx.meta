@@ -27,6 +27,15 @@ ModelImporter:
   - first:
       74: -5806769105403068116
     second: JampDown
+  - first:
+      74: -7960696785132781767
+    second: Ability
+  - first:
+      74: -5480419611278045171
+    second: Run
+  - first:
+      74: 929313338806502799
+    second: Ability2
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -91,8 +100,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Run1
-      takeName: rig|Run1
+      name: Run
+      takeName: rig|Run
       internalID: 0
       firstFrame: 0
       lastFrame: 80
@@ -211,6 +220,64 @@ ModelImporter:
       takeName: rig|Jamp
       internalID: 0
       firstFrame: 50
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Ability
+      takeName: rig|Ability
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Ability2
+      takeName: rig|Ability2
+      internalID: 0
+      firstFrame: 0
       lastFrame: 80
       wrapMode: 0
       orientationOffsetY: 0

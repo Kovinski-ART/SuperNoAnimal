@@ -13,6 +13,8 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 
+		public bool ability;
+
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
@@ -28,7 +30,7 @@ namespace StarterAssets
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
+			if (cursorInputForLook)
 			{
 				LookInput(value.Get<Vector2>());
 			}
@@ -43,13 +45,17 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+		public void OnAbility(InputValue value)
+		{
+			AbilityInput(value.isPressed);
+		}
 #endif
 
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
-		} 
+		}
 
 		public void LookInput(Vector2 newLookDirection)
 		{
@@ -59,6 +65,11 @@ namespace StarterAssets
 		public void JumpInput(bool newJumpState)
 		{
 			jump = newJumpState;
+		}
+
+		public void AbilityInput(bool newAbility)
+		{
+			ability = newAbility;
 		}
 
 		public void SprintInput(bool newSprintState)
@@ -76,5 +87,5 @@ namespace StarterAssets
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 	}
-	
+
 }
