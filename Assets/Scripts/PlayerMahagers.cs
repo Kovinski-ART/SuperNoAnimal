@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class PlayerMahagers : MonoBehaviour
 {
 	[SerializeField] private bool OnPlayer;
-	[SerializeField] private Transform startingPlayerPosition;
+	[SerializeField] private GameObject startingPlayerPosition;
 
 	[SerializeField] public List<PlayerInput> players;
 	[SerializeField] public List<ThirdPersonController> thirdPersonControllers;
@@ -19,18 +19,28 @@ public class PlayerMahagers : MonoBehaviour
 	private CinemachineTargetGroup group;
 
 	PlayerInputManager inputManager;
-	// Start is called before the first frame update
-	/// <summary>
-	/// Awake is called when the script instance is being loaded.
-	/// </summary>
+
+	private void OnValidate()
+	{
+		//inputManager = GetComponent<PlayerInputManager>();
+
+		if (OnPlayer && startingPlayerPosition.activeSelf == false)
+		{
+			startingPlayerPosition.SetActive(true);
+
+			group.AddMember(startingPlayerPosition.transform, 1, 2);
+		}
+		else if (!OnPlayer && startingPlayerPosition.activeSelf == true)
+		{
+			startingPlayerPosition.SetActive(false);
+			group.RemoveMember(startingPlayerPosition.transform);
+		}
+	}
+
 	private void Awake()
 	{
 		inputManager = GetComponent<PlayerInputManager>();
 
-		if (OnPlayer)
-		{
-			group.AddMember(startingPlayerPosition.transform, 1, 2);
-		}
 	}
 
 	// Update is called once per frame
