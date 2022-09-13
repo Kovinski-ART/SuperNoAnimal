@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class AbilityHolder : MonoBehaviour
 {
-	public Ability ability;
+	public List<Ability> ability;
 	float cooldownTime;
 	float activeTime;
 
@@ -18,15 +18,10 @@ public class AbilityHolder : MonoBehaviour
 
 	// animation IDs
 	private int _animIDAbility;
+	private int _animIDAbility1;
 
+	private bool intput2;
 
-	enum AbilityState
-	{
-		ready,
-		active,
-		cooldown
-	}
-	AbilityState state = AbilityState.ready;
 
 	private void Start()
 	{
@@ -35,11 +30,14 @@ public class AbilityHolder : MonoBehaviour
 		_controller = GetComponent<ThirdPersonController>();
 
 		AssignAnimationIDs();
+
+
 	}
 
 	private void AssignAnimationIDs()
 	{
 		_animIDAbility = Animator.StringToHash("Ability");
+		_animIDAbility1 = Animator.StringToHash("Ability2");
 
 	}
 
@@ -47,48 +45,56 @@ public class AbilityHolder : MonoBehaviour
 	{
 		_hasAnimator = TryGetComponent(out _animator);
 
-		switch (state)
+		AbilityHolderActive(0, _animIDAbility, _input.ability, out _input.ability); //Dash
+		AbilityHolderActive(1, _animIDAbility1, _input.ability1, out _input.ability1); //Base Attack
+
+	}
+
+	private void AbilityHolderActive(int iAbility, int animID, bool intput, out bool ints)
+	{
+		ints = intput;
+
+		switch (ability[iAbility].state)
 		{
-			case AbilityState.ready:
-				if (_input.ability)
+			case Ability.AbilityState.ready:
+				if (intput)
 				{
-					ability.Activate(gameObject);
-					state = AbilityState.active;
-					activeTime = ability.activeTime;
+					ability[iAbility].Activate(gameObject);
+					ability[iAbility].state = Ability.AbilityState.active;
+					activeTime = ability[iAbility].activeTime;
 				}
 				break;
-			case AbilityState.active:
+			case Ability.AbilityState.active:
 				if (activeTime > 0)
 				{
 					if (_hasAnimator)
 					{
-						_animator.SetBool(_animIDAbility, true);
+						_animator.SetBool(animID, true);
 					}
 					activeTime -= Time.deltaTime;
 				}
 				else
 				{
-					ability.BeginCooldown(gameObject);
-					state = AbilityState.cooldown;
-					cooldownTime = ability.cooldownTime;
+					ability[iAbility].BeginCooldown(gameObject);
+					ability[iAbility].state = Ability.AbilityState.cooldown;
+					cooldownTime = ability[iAbility].cooldownTime;
 					if (_hasAnimator)
 					{
-						_animator.SetBool(_animIDAbility, false);
+						_animator.SetBool(animID, false);
 					}
 				}
 				break;
-			case AbilityState.cooldown:
+			case Ability.AbilityState.cooldown:
 				if (cooldownTime > 0)
 				{
 					cooldownTime -= Time.deltaTime;
 				}
 				else
 				{
-					state = AbilityState.ready;
-					_input.ability = false;
+					ability[iAbility].state = Ability.AbilityState.ready;
+					ints = false;
 				}
 				break;
 		}
-
 	}
 }

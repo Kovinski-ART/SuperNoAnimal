@@ -14,6 +14,7 @@ namespace StarterAssets
 		public bool sprint;
 
 		public bool ability;
+		public bool ability1;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -49,6 +50,11 @@ namespace StarterAssets
 		{
 			AbilityInput(value.isPressed);
 		}
+
+		public void OnAbility1(InputValue value)
+		{
+			Ability1Input(value.isPressed);
+		}
 #endif
 
 
@@ -70,6 +76,11 @@ namespace StarterAssets
 		public void AbilityInput(bool newAbility)
 		{
 			ability = newAbility;
+		}
+
+		public void Ability1Input(bool newAbility1)
+		{
+			ability1 = newAbility1;
 		}
 
 		public void SprintInput(bool newSprintState)
