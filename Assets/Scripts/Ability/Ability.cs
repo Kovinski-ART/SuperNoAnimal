@@ -10,7 +10,7 @@ public class Ability : ScriptableObject
 	public float cooldownTime;
 	public float activeTime;
 
-	static enum AbilityState
+	public enum AbilityState
 	{
 		ready,
 		active,
