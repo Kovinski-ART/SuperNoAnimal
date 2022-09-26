@@ -10,14 +10,20 @@ public class Locomotion : MonoBehaviour
 	private InputManager m_inputManager = default;
 	private Vector3 m_movementDir;
 	private float m_inputAmount;
+
+	public float JumpHeight = 2f;
 	#endregion
+
 	#region BuiltIn Methods
 	private void FixedUpdate()
 	{
 		UpdateMovementInput();
 		UpdatePhysics();
+
+
 	}
 	#endregion
+
 	#region Custom Methods
 	private void UpdateMovementInput()
 	{
@@ -26,8 +32,8 @@ public class Locomotion : MonoBehaviour
 		Vector3 sideway = m_inputManager.Sideway * transform.right;
 		Vector3 combinedInput = (forward + sideway).normalized;
 		m_movementDir = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
-		float inputMagnitude = Mathf.Abs(m_inputManager.Forward) +
-			Mathf.Abs(m_inputManager.Sideway);
+		float inputMagnitude = Mathf.Abs(_input.move.x) +
+			Mathf.Abs(_input.move.y);
 		m_inputAmount = Mathf.Clamp01(inputMagnitude);
 	}
 	#endregion
@@ -63,10 +69,9 @@ public class Locomotion : MonoBehaviour
 
 	private float _targetRotation = 0.0f;
 	public float RotationSmoothTime = 0.12f;
+	private float _jumpTimeoutDelta;
 	private void UpdatePhysics()
 	{
-
-
 		if (_input.move != Vector2.zero)
 		{
 			Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
@@ -79,15 +84,15 @@ public class Locomotion : MonoBehaviour
 			transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
 		}
 
-
 		m_groundRayLenght = (m_collider.height * 0.5f) + m_offsetFloorY;
+
 		if (FloorRaycasts(0, 0, m_groundRayLenght).transform == null)
 		{
 			m_gravity += (Vector3.up * Physics.gravity.y * Time.fixedDeltaTime);
 		}
 
 		//m_rb.velocity = (m_movementDir * m_movementSpeed * m_inputAmount) + m_gravity;
-		m_rb.velocity = (m_movementDir * m_movementSpeed) + m_gravity;
+		m_rb.velocity = (m_movementDir * m_movementSpeed * m_inputAmount) + m_gravity;
 
 		m_floorMovement = new Vector3(m_rb.position.x, FindFloor().y, m_rb.position.z);
 
@@ -96,6 +101,18 @@ public class Locomotion : MonoBehaviour
 			m_rb.MovePosition(m_floorMovement);
 			m_gravity.y = 0;
 		}
+
+
+		// Jump
+		if (_input.jump && FloorRaycasts(0, 0, m_groundRayLenght).transform != null)
+		{
+			//_input.jump = false;
+			// the square root of H * -2 * G = how much velocity needed to reach desired height
+			//m_gravity.y = 1;
+			//m_rb.MovePosition(new Vector3(m_rb.position.x, Mathf.Sqrt(JumpHeight * -2f * Physics.gravity.y * Time.fixedDeltaTime), m_rb.position.z));
+			m_rb.AddForce(Vector3.up * JumpHeight, ForceMode.Impulse); //+= new Vector3(0, JumpHeight, 0);
+		}
+
 	}
 	private Vector3 FindFloor()
 	{
