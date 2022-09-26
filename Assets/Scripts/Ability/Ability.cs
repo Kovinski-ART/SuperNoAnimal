@@ -1,23 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-
-[CreateAssetMenu(fileName = "Ability", menuName = "SuperNoAnimal/Ability", order = 0)]
 public class Ability : ScriptableObject
 {
+	public class MyFloatEvent : UnityEvent<float> { }
+	public MyFloatEvent OnAbilityUse = new MyFloatEvent();
+
+	[Header("Ability Info")]
+	public string title;
+	public Sprite icon;
+	public float cooldownTime = 1;
+	private bool canUse = true;
 	public new string name;
-	public float cooldownTime;
+
 	public float activeTime;
 
-	public enum AbilityState
-	{
-		ready,
-		active,
-		cooldown
-	}
-	public AbilityState state = AbilityState.ready;
 
-	public virtual void Activate(GameObject parent) { }
-	public virtual void BeginCooldown(GameObject parent) { }
+
+	public virtual void Activate(CharacterController character) { }
 }
+

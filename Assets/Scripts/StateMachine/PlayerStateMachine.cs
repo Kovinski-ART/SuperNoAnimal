@@ -15,9 +15,9 @@ public class PlayerStateMachine : MonoBehaviour
 	bool _isJumping = false;
 
 	// constants
-	float _moveSpeed = 5f;
-	float _runMultiplier = 8.0f;
-	float _rotationFactorPerFrame = 15.0f;
+	float _moveSpeed = 2f;
+	float _runMultiplier = 6.0f;
+	float _rotationFactorPerFrame = 5.0f;
 
 	// gravity variables
 	float _gravity = -9.8f;
@@ -29,6 +29,7 @@ public class PlayerStateMachine : MonoBehaviour
 	float _maxJumpTime = 0.75f;
 
 	// state variable
+	[SerializeField] public List<PlayerBaseState> _AbilityState;
 	PlayerBaseState _currentState;
 	PlayerStateFactory _states;
 
@@ -52,7 +53,31 @@ public class PlayerStateMachine : MonoBehaviour
 	public float RunMultiplier { get { return _runMultiplier; } }
 	public float MoveSpeed { get { return _moveSpeed; } }
 
+	public Animator Animator { get { return _animator; } set { _animator = value; } }
+	private bool _hasAnimator;
+	public bool HasAnimator { get { return _hasAnimator; } }
 
+	//! animation IDS
+	private int _animIDSpeed;
+	private int _animIDGrounded;
+	private int _animIDJump;
+	private int _animIDFreeFall;
+	private int _animIDMotionSpeed;
+	private int _animIDAbility;
+
+	private float _animationBlend;
+	public float AnimationBlend { get { return _animationBlend; } set { _animationBlend = value; } }
+	public int AnimIDSpeed { get { return _animIDSpeed; } }
+	public int AnimIDGrounded { get { return _animIDGrounded; } }
+	public int AnimIDJump { get { return _animIDJump; } }
+	public int AnimIDFreeFall { get { return _animIDFreeFall; } }
+	public int AnimIDMotionSpeed { get { return _animIDMotionSpeed; } }
+	public int AnimIDAbility { get { return _animIDAbility; } }
+
+
+	public bool Ability { get { return _input.ability; } }
+
+	public Ability ability1;
 
 	private void Awake()
 	{
@@ -68,6 +93,7 @@ public class PlayerStateMachine : MonoBehaviour
 		_currentState.EnterState();
 
 		setupJumpVariables();
+		AssignAnimationIDs();
 	}
 	void setupJumpVariables()
 	{
@@ -75,8 +101,22 @@ public class PlayerStateMachine : MonoBehaviour
 		_gravity = (-2 * _maxJumpHeight) / Mathf.Pow(timeToApex, 2);
 		_initialJumpVelocity = (2 * _maxJumpHeight) / timeToApex;
 	}
+
+	private void AssignAnimationIDs()
+	{
+		_animIDSpeed = Animator.StringToHash("Speed");
+		_animIDGrounded = Animator.StringToHash("Grounded");
+		_animIDJump = Animator.StringToHash("Jump");
+		_animIDFreeFall = Animator.StringToHash("FreeFall");
+		_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+		_animIDAbility = Animator.StringToHash("Ability");
+		//_animIDAbility1 = Animator.StringToHash("Ability2");
+
+	}
+
 	void HandleRotation()
 	{
+
 		Vector3 positionToLookAt;
 
 		positionToLookAt.x = _input.move.x;
@@ -93,8 +133,11 @@ public class PlayerStateMachine : MonoBehaviour
 
 	void Update()
 	{
+		_hasAnimator = TryGetComponent(out _animator);
 		HandleRotation();
 		_currentState.UpdateStates();
+
+		//Debug.Log(_currentState.name)
 		_controller.Move(_applieMovement * Time.deltaTime);
 	}
 }

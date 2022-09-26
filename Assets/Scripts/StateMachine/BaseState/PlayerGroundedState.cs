@@ -24,6 +24,8 @@ public class PlayerGroundedState : PlayerBaseState, IRootGravityState
 	}
 	public override void InitializeSubState()
 	{
+
+
 		if (!Ctx.IsMoventPressed && !Ctx.IsRunPressed)
 		{
 			SetSubState(Factory.Idle());
@@ -36,9 +38,16 @@ public class PlayerGroundedState : PlayerBaseState, IRootGravityState
 		{
 			SetSubState(Factory.Run());
 		}
+
+
 	}
 	public override void CheckSwithStates()
 	{
+		if (Ctx.Ability)
+		{
+			SwitchState(Factory.Ability());
+		}
+
 		if (Ctx.IsJumpingPressed)
 		{
 			SwitchState(Factory.Jump());

@@ -46401,6 +46401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 915ac34bb937cfd47a1087d61200dcfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ability1: {fileID: 11400000, guid: dcdeae32181f6a6429c0ee1de02b14dc, type: 2}
 --- !u!114 &935156039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58979,7 +58980,7 @@ MonoBehaviour:
   m_RotationMode: 1
   m_UpdateMethod: 2
   m_Targets:
-  - target: {fileID: 5749833741474206095}
+  - target: {fileID: 935156043}
     weight: 1
     radius: 2
 --- !u!4 &1917492785

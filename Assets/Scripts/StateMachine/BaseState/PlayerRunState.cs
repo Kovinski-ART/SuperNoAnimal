@@ -12,6 +12,16 @@ public class PlayerRunState : PlayerBaseState
 		CheckSwithStates();
 		Ctx.ApplieMovementX = Ctx.InputMovement.x * Ctx.RunMultiplier;
 		Ctx.ApplieMovementZ = Ctx.InputMovement.y * Ctx.RunMultiplier;
+
+		float inputMagnitude = Ctx.InputMovement.magnitude;
+
+		Ctx.AnimationBlend = Mathf.Lerp(Ctx.AnimationBlend, 6, Time.deltaTime * Ctx.RunMultiplier);
+
+		if (Ctx.HasAnimator)
+		{
+			Ctx.Animator.SetFloat(Ctx.AnimIDSpeed, Ctx.AnimationBlend);
+			Ctx.Animator.SetFloat(Ctx.AnimIDMotionSpeed, inputMagnitude);
+		}
 	}
 	public override void ExitState() { }
 	public override void CheckSwithStates()
