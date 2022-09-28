@@ -79,6 +79,10 @@ public class PlayerStateMachine : MonoBehaviour
 
 	public Ability ability1;
 
+
+	public AbilityState StateAbility = AbilityState.ready;
+	public float CooldownTimeAbility;
+
 	private void Awake()
 	{
 		_controller = GetComponent<CharacterController>();
@@ -139,5 +143,29 @@ public class PlayerStateMachine : MonoBehaviour
 
 		//Debug.Log(_currentState.name)
 		_controller.Move(_applieMovement * Time.deltaTime);
+
+
+		switch (StateAbility)
+		{
+			case AbilityState.cooldown:
+				if (CooldownTimeAbility > 0)
+				{
+					CooldownTimeAbility -= Time.deltaTime;
+				}
+				else
+				{
+					CooldownTimeAbility = 0;
+					StateAbility = AbilityState.ready;
+				}
+				break;
+			default:
+				break;
+		}
 	}
+}
+public enum AbilityState
+{
+	ready,
+	active,
+	cooldown,
 }

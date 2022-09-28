@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
 {
-	public PlayerIdleState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) { }
+	public PlayerIdleState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory, "Idel") { }
 
 	public override void EnterState()
 	{
 
-		Debug.Log("Enter State Idel");
 		Ctx.ApplieMovementX = 0;
 		Ctx.ApplieMovementZ = 0;
 

@@ -1,7 +1,10 @@
 
+using UnityEngine;
+
 public abstract class PlayerBaseState
 {
 	private bool _isRootState = false;
+	private string name = "Defaut";
 	private PlayerStateMachine _ctx;
 	private PlayerStateFactory _factory;
 	private PlayerBaseState _currentSubState;
@@ -15,6 +18,12 @@ public abstract class PlayerBaseState
 	{
 		_ctx = currentContext;
 		_factory = playerStateFactory;
+	}
+	public PlayerBaseState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory, string newname)
+	{
+		_ctx = currentContext;
+		_factory = playerStateFactory;
+		name = newname;
 	}
 
 
@@ -58,10 +67,12 @@ public abstract class PlayerBaseState
 	}
 	protected void SetSuperState(PlayerBaseState newSuperState)
 	{
+		Debug.Log($"Set Super State : " + newSuperState.name);
 		_currentSuperState = newSuperState;
 	}
 	protected void SetSubState(PlayerBaseState newSubState)
 	{
+		Debug.Log($"Set Sub State : " + newSubState.name);
 		_currentSubState = newSubState;
 		newSubState.SetSuperState(this);
 	}
@@ -72,9 +83,7 @@ public abstract class PlayerBaseState
 		{
 			_currentSubState.ExitState();
 		}
-
 		newSubState.EnterState();
-
 		_currentSubState = newSubState;
 		newSubState.SetSuperState(this);
 

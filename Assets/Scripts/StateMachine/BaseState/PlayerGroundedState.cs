@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class PlayerGroundedState : PlayerBaseState, IRootGravityState
 {
-	public PlayerGroundedState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) { IsRootState = true; }
+	public PlayerGroundedState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory, "Grounded") { IsRootState = true; }
 
 	public override void EnterState()
 	{
 		InitializeSubState();
-		Debug.Log("Enter State Grounded");
 
 		Ctx.CurrentMovementY = Ctx.GroudedGravity;
 		Ctx.ApplieMovementY = Ctx.GroudedGravity;
@@ -18,10 +17,7 @@ public class PlayerGroundedState : PlayerBaseState, IRootGravityState
 	{
 		CheckSwithStates();
 	}
-	public override void ExitState()
-	{
-		Debug.Log("Exit State Grounded");
-	}
+	public override void ExitState() { }
 	public override void InitializeSubState()
 	{
 
@@ -43,9 +39,9 @@ public class PlayerGroundedState : PlayerBaseState, IRootGravityState
 	}
 	public override void CheckSwithStates()
 	{
-		if (Ctx.Ability)
+		if (Ctx.Ability && Ctx.StateAbility == AbilityState.ready)
 		{
-			SwitchState(Factory.Ability());
+			SwitchSubState(Factory.Ability());
 		}
 
 		if (Ctx.IsJumpingPressed)

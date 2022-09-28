@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerRunState : PlayerBaseState
 {
-	public PlayerRunState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) { }
+	public PlayerRunState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory, "Run") { }
 
 	public override void EnterState() { }
 	public override void UpdateState()
