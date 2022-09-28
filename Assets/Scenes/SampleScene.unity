@@ -585,7 +585,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32026
+  m_Name: pb_Mesh26560
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6492,7 +6492,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh46390
+  m_Name: pb_Mesh26674
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8205,7 +8205,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886730075}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 0.049, z: 2.75}
+  m_LocalPosition: {x: 1.5, y: 0, z: 2.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46383,7 +46383,7 @@ GameObject:
   - component: {fileID: 935156039}
   - component: {fileID: 935156037}
   m_Layer: 0
-  m_Name: Character Rigidbody (1)
+  m_Name: Character
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46402,6 +46402,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ability1: {fileID: 11400000, guid: dcdeae32181f6a6429c0ee1de02b14dc, type: 2}
+  StateAbility: 0
+  CooldownTimeAbility: 0
 --- !u!114 &935156039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47445,7 +47447,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh46426
+  m_Name: pb_Mesh26704
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
