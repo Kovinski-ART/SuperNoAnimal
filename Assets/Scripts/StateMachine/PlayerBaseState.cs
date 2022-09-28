@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class PlayerBaseState
 {
 	private bool _isRootState = false;
-	private string name = "Defaut";
+	private string _name = "Defaut";
 	private PlayerStateMachine _ctx;
 	private PlayerStateFactory _factory;
 	private PlayerBaseState _currentSubState;
@@ -23,7 +23,7 @@ public abstract class PlayerBaseState
 	{
 		_ctx = currentContext;
 		_factory = playerStateFactory;
-		name = newname;
+		_name = newname;
 	}
 
 
@@ -67,12 +67,12 @@ public abstract class PlayerBaseState
 	}
 	protected void SetSuperState(PlayerBaseState newSuperState)
 	{
-		Debug.Log($"Set Super State : " + newSuperState.name);
+		Debug.Log($"Set Super State : " + newSuperState._name);
 		_currentSuperState = newSuperState;
 	}
 	protected void SetSubState(PlayerBaseState newSubState)
 	{
-		Debug.Log($"Set Sub State : " + newSubState.name);
+		Debug.Log($"Set Sub State : " + newSubState._name);
 		_currentSubState = newSubState;
 		newSubState.SetSuperState(this);
 	}

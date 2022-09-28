@@ -11,11 +11,10 @@ public class Ability : ScriptableObject
 	[Header("Ability Info")]
 	public string title;
 	public Sprite icon;
-	public float cooldownTime = 1;
-	private bool canUse = true;
-	public new string name;
-
+	
+	public new string name = "Ability";
 	public float activeTime;
+	public float cooldownTime = 1;
 
 
 

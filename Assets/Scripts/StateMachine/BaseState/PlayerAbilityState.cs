@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public class PlayerAbilityState : PlayerBaseState
 {
-	AbilityState state = AbilityState.ready;
-	float activeTime;
+	
+	private float _activeTime;
 
 	public PlayerAbilityState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) { }
 
@@ -17,8 +17,8 @@ public class PlayerAbilityState : PlayerBaseState
 		{
 			Ctx.Animator.SetBool(Ctx.AnimIDAbility, true);
 		}
-		Ctx.StateAbility = AbilityState.active;
-		activeTime = Ctx.ability1.activeTime;
+		Ctx.StateAbility = AbilityState.Active;
+		_activeTime = Ctx.ability1.activeTime;
 	}
 	public override void UpdateState()
 	{
@@ -26,16 +26,16 @@ public class PlayerAbilityState : PlayerBaseState
 
 		switch (Ctx.StateAbility)
 		{
-			case AbilityState.active:
+			case AbilityState.Active:
 				Ctx.ability1.Activate(Ctx.CharacterController);
-				if (activeTime > 0)
+				if (_activeTime > 0)
 				{
 
-					activeTime -= Time.deltaTime;
+					_activeTime -= Time.deltaTime;
 				}
 				else
 				{
-					Ctx.StateAbility = AbilityState.cooldown;
+					Ctx.StateAbility = AbilityState.Cooldown;
 					Ctx.CooldownTimeAbility = Ctx.ability1.cooldownTime;
 				}
 				break;
@@ -58,7 +58,7 @@ public class PlayerAbilityState : PlayerBaseState
 	}
 	public override void CheckSwithStates()
 	{
-		if (Ctx.StateAbility == AbilityState.cooldown)
+		if (Ctx.StateAbility == AbilityState.Cooldown)
 		{
 			if (!Ctx.IsMoventPressed && !Ctx.IsRunPressed)
 			{

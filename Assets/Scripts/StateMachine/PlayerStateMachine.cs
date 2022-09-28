@@ -75,13 +75,14 @@ public class PlayerStateMachine : MonoBehaviour
 	public int AnimIDAbility { get { return _animIDAbility; } }
 
 
-	public bool Ability { get { return _input.ability; } }
+	public bool Ability => _input.ability;
 
 	public Ability ability1;
 
 
-	public AbilityState StateAbility = AbilityState.ready;
-	public float CooldownTimeAbility;
+	public AbilityState StateAbility = AbilityState.Ready;
+	private float _cooldownTimeAbility = 0;
+	public float CooldownTimeAbility { get { return _cooldownTimeAbility; } set { _cooldownTimeAbility = value; } }
 
 	private void Awake()
 	{
@@ -96,10 +97,10 @@ public class PlayerStateMachine : MonoBehaviour
 		_currentState = _states.Grounded();
 		_currentState.EnterState();
 
-		setupJumpVariables();
+		SetupJumpVariables();
 		AssignAnimationIDs();
 	}
-	void setupJumpVariables()
+	private void SetupJumpVariables()
 	{
 		float timeToApex = _maxJumpTime / 2;
 		_gravity = (-2 * _maxJumpHeight) / Mathf.Pow(timeToApex, 2);
@@ -147,7 +148,7 @@ public class PlayerStateMachine : MonoBehaviour
 
 		switch (StateAbility)
 		{
-			case AbilityState.cooldown:
+			case AbilityState.Cooldown:
 				if (CooldownTimeAbility > 0)
 				{
 					CooldownTimeAbility -= Time.deltaTime;
@@ -155,7 +156,7 @@ public class PlayerStateMachine : MonoBehaviour
 				else
 				{
 					CooldownTimeAbility = 0;
-					StateAbility = AbilityState.ready;
+					StateAbility = AbilityState.Ready;
 				}
 				break;
 			default:
@@ -165,7 +166,7 @@ public class PlayerStateMachine : MonoBehaviour
 }
 public enum AbilityState
 {
-	ready,
-	active,
-	cooldown,
+	Ready,
+	Active,
+	Cooldown,
 }

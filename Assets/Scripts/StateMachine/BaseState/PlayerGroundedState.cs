@@ -39,7 +39,7 @@ public class PlayerGroundedState : PlayerBaseState, IRootGravityState
 	}
 	public override void CheckSwithStates()
 	{
-		if (Ctx.Ability && Ctx.StateAbility == AbilityState.ready)
+		if (Ctx.Ability && Ctx.StateAbility == AbilityState.Ready)
 		{
 			SwitchSubState(Factory.Ability());
 		}
