@@ -9,13 +9,25 @@ public class PlayerFallState : PlayerBaseState, IRootGravityState
 	public override void EnterState()
 	{
 		InitializeSubState();
+		if (Ctx.HasAnimator)
+		{
+			Ctx.Animator.SetBool(Ctx.AnimIDFreeFall, true);
+			Ctx.Animator.SetBool(Ctx.AnimIDGrounded, false);
+		}
 	}
 	public override void UpdateState()
 	{
 		CheckSwithStates();
 		HandleGravity();
 	}
-	public override void ExitState() { }
+
+	public override void ExitState()
+	{
+		if (Ctx.HasAnimator)
+		{
+			Ctx.Animator.SetBool(Ctx.AnimIDFreeFall, false);
+		}
+	}
 
 	public void HandleGravity()
 	{

@@ -9,8 +9,12 @@ public class PlayerJumpState : PlayerBaseState, IRootGravityState
 	public override void EnterState()
 	{
 		InitializeSubState();
-		Debug.Log("Enter State Jump");
 		HandleJamp();
+		if (Ctx.HasAnimator)
+		{
+			Ctx.Animator.SetBool(Ctx.AnimIDJump, true);
+			Ctx.Animator.SetBool(Ctx.AnimIDGrounded, false);
+		}
 	}
 	public override void UpdateState()
 	{
@@ -19,7 +23,10 @@ public class PlayerJumpState : PlayerBaseState, IRootGravityState
 	}
 	public override void ExitState()
 	{
-		Debug.Log("Exit State Jump");
+		if (Ctx.HasAnimator)
+		{
+			Ctx.Animator.SetBool(Ctx.AnimIDJump, false);
+		}
 	}
 	public override void InitializeSubState()
 	{
@@ -47,7 +54,7 @@ public class PlayerJumpState : PlayerBaseState, IRootGravityState
 	void HandleJamp()
 	{
 		Ctx.IsJumping = true;
-
+		
 		Ctx.CurrentMovementY = Ctx.InitialJumpVelocity;
 		Ctx.ApplieMovementY = Ctx.InitialJumpVelocity;
 	}

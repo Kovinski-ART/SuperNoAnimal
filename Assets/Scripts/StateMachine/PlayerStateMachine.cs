@@ -74,7 +74,7 @@ public class PlayerStateMachine : MonoBehaviour
 	public int AnimIDMotionSpeed { get { return _animIDMotionSpeed; } }
 	public int AnimIDAbility { get { return _animIDAbility; } }
 
-
+	// Ability 
 	public bool Ability => _input.ability;
 
 	public Ability ability1;
@@ -82,8 +82,17 @@ public class PlayerStateMachine : MonoBehaviour
 
 	public AbilityState StateAbility = AbilityState.Ready;
 	private float _cooldownTimeAbility = 0;
-	public float CooldownTimeAbility { get { return _cooldownTimeAbility; } set { _cooldownTimeAbility = value; } }
+	public float CooldownTimeAbility { get => _cooldownTimeAbility;
+		set => _cooldownTimeAbility = value;
+	}
 
+	[SerializeField] private Collider _headCollider;
+
+	public OnColiderEnter HeadColider;
+	//OnCollisionEnter
+	// end ability
+	
+	
 	private void Awake()
 	{
 		_controller = GetComponent<CharacterController>();
@@ -135,16 +144,22 @@ public class PlayerStateMachine : MonoBehaviour
 			transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, _rotationFactorPerFrame * Time.deltaTime);
 		}
 	}
-
+	void OnDrawGizmosSelected()
+	{
+		// Draw a yellow cube at the transform position
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireCube(transform.position + new Vector3(0, 1, 0.75f), new Vector3(1, 0.55f, 0.4f));
+	}
+	
 	void Update()
 	{
+		
 		_hasAnimator = TryGetComponent(out _animator);
 		HandleRotation();
 		_currentState.UpdateStates();
 
 		//Debug.Log(_currentState.name)
 		_controller.Move(_applieMovement * Time.deltaTime);
-
 
 		switch (StateAbility)
 		{
@@ -163,6 +178,7 @@ public class PlayerStateMachine : MonoBehaviour
 				break;
 		}
 	}
+	
 }
 public enum AbilityState
 {

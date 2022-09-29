@@ -67,12 +67,12 @@ public abstract class PlayerBaseState
 	}
 	protected void SetSuperState(PlayerBaseState newSuperState)
 	{
-		Debug.Log($"Set Super State : " + newSuperState._name);
+		//Debug.Log($"Set Super State : " + newSuperState._name);
 		_currentSuperState = newSuperState;
 	}
 	protected void SetSubState(PlayerBaseState newSubState)
 	{
-		Debug.Log($"Set Sub State : " + newSubState._name);
+		//Debug.Log($"Set Sub State : " + newSubState._name);
 		_currentSubState = newSubState;
 		newSubState.SetSuperState(this);
 	}

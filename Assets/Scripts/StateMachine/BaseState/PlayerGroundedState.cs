@@ -9,7 +9,12 @@ public class PlayerGroundedState : PlayerBaseState, IRootGravityState
 	public override void EnterState()
 	{
 		InitializeSubState();
-
+		
+		if (Ctx.HasAnimator)
+		{
+			Ctx.Animator.SetBool(Ctx.AnimIDGrounded, true);
+		}
+		
 		Ctx.CurrentMovementY = Ctx.GroudedGravity;
 		Ctx.ApplieMovementY = Ctx.GroudedGravity;
 	}
@@ -44,11 +49,11 @@ public class PlayerGroundedState : PlayerBaseState, IRootGravityState
 			SwitchSubState(Factory.Ability());
 		}
 
-		if (Ctx.IsJumpingPressed)
+		if (Ctx.IsJumpingPressed && Ctx.StateAbility != AbilityState.Active)
 		{
 			SwitchState(Factory.Jump());
 		}
-		else if (!Ctx.CharacterController.isGrounded)
+		else if (!Ctx.CharacterController.isGrounded  && Ctx.StateAbility != AbilityState.Active)
 		{
 			SwitchState(Factory.Fall());
 		}

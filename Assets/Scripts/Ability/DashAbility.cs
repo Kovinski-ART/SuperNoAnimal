@@ -10,6 +10,6 @@ public class DashAbility : Ability
 	public override void Activate(CharacterController character)
 	{
 		Vector3 _applieMovement = character.transform.forward;
-		character.Move(character.transform.forward * dashVelocity * Time.fixedDeltaTime);
+		character.SimpleMove(character.transform.forward * dashVelocity);
 	}
 }
